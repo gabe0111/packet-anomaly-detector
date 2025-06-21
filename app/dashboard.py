@@ -1,3 +1,10 @@
+import os, sys
+print("PWD:", os.getcwd(), "DIRS:", os.listdir("."))
+if "data" in os.listdir("."):
+    print("data folder contents:", os.listdir("data"))
+else:
+    print("data folder missing at runtime")
+
 import matplotlib
 matplotlib.use('Agg')  # Use non-GUI backend
 import matplotlib.pyplot as plt
