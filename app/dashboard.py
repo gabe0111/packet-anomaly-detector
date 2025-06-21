@@ -23,7 +23,9 @@ logger = setup_logger(__name__)
 @app.route("/", methods=["GET"])
 def home():
     logger.info("Dashboard accessed via GET")
-    data_path = "data/processed_packets_labeled.csv"
+    data_path = os.path.join(os.path.dirname(__file__), "..", "data", "processed_packets_labeled.csv")
+    data_path = os.path.normpath(data_path)
+
     if not os.path.exists(data_path):
         logger.warning("CSV file missing, starting with empty dataset.")
         df = pd.DataFrame(columns=['src_ip', 'dst_ip', 'protocol', 'src_port', 'dst_port', 'anomaly'])
