@@ -23,7 +23,13 @@ logger = setup_logger(__name__)
 @app.route("/", methods=["GET"])
 def home():
     logger.info("Dashboard accessed via GET")
-    df = pd.read_csv("data/processed_packets_labeled.csv")
+    data_path = "data/processed_packets_labeled.csv"
+    if not os.path.exists(data_path):
+        logger.warning("CSV file missing, starting with empty dataset.")
+        df = pd.DataFrame(columns=['src_ip', 'dst_ip', 'protocol', 'src_port', 'dst_port', 'anomaly'])
+    else:
+        df = pd.read_csv(data_path)
+
     protocol = request.args.get("protocol")
     port = request.args.get("port")
 
